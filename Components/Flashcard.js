@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 8,
     borderColor: colorPalette.whiteColor,
-    backgroundColor: colorPalette.bgColor500,
+    backgroundColor: colorPalette.bgColor400,
     textAlign: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 8,
     borderColor: colorPalette.whiteColor,
-    backgroundColor: colorPalette.bgColor500,
+    backgroundColor: colorPalette.bgColor400,
     textAlign: 'center',
     justifyContent: 'center',
     flexDirection: 'row', //'column'

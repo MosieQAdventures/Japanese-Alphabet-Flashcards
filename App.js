@@ -21,7 +21,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="MainNavScreen" component={MainNavScreen} 
             options={{
-              title: "Learn Japanese Flashcards",
+              title: "Japanese Flashcards",
               headerTitleAlign: "center",
               headerStyle: { backgroundColor: colorPalette.bgColor },
               headerTintColor: colorPalette.whiteColor,

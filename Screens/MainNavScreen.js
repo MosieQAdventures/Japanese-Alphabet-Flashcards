@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, Linking } from 'react-native';
 import { colorPalette } from '../Data/Colors'
 import ApiScreen from './ApiScreen';
 import HiraKataScreen from './HiraKataScreen';
@@ -18,7 +18,7 @@ export default function MainNavScreen({ navigation }) {
 
       <View style={styles.mainContainer}>
 
-        <Pressable style={styles.card} onPress={hiraKataPressHandler}>
+        <Pressable style={styles.cardHK} onPress={hiraKataPressHandler}>
           <View style={styles.frontText}>
             <Text style={styles.setTextSub}>
               ひらがな  |  カタカナ
@@ -40,7 +40,7 @@ export default function MainNavScreen({ navigation }) {
           </View>
         </Pressable>
 
-        <Pressable style={styles.card} onPress={kanjiPressHandler}>
+        <Pressable style={styles.cardK} onPress={kanjiPressHandler}>
           <View style={styles.frontText}>
             <Text style={styles.setTextMain}>
               漢字  |  かんじ
@@ -65,9 +65,13 @@ export default function MainNavScreen({ navigation }) {
       </View>
 
       <View style={styles.bottomContainer}>
-        <Text style={{color: colorPalette.bgColor200}}>Hubert Mosz</Text>
-        <Text style={{color: colorPalette.bgColor200}}>Capgemini</Text>
-        <Text style={{color: colorPalette.bgColor200}}>02.2023</Text>
+        <Pressable onPress={() => {Linking.openURL('https://github.com/MosieQAdventures/ReactNativeApp')}}>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{color: colorPalette.bgColor200}}>Hubert Mosz</Text>
+            <Text style={{color: colorPalette.bgColor200}}>Capgemini</Text>
+            <Text style={{color: colorPalette.bgColor200}}>02.2023</Text>
+          </View>
+        </Pressable>
       </View>
     </>
   );
@@ -93,7 +97,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  card: {
+  cardHK: {
+    width: 300,
+    height: 300,
+    padding: 4,
+    margin: 12,
+    borderWidth: 4,
+    borderRadius: 8,
+    borderColor: colorPalette.whiteColor,
+    backgroundColor: colorPalette.bgColor400,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    elevation: 5,
+  },
+  cardK: {
     width: 300,
     height: 300,
     padding: 4,

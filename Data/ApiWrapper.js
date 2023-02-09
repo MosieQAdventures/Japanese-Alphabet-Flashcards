@@ -14,7 +14,7 @@ export async function GetKanjiCharacters() {
   let response = null;
 
   try {
-    response = await axios.get(APILINK + joyo); //switch here for 2nd one if needed (joyo/jin)
+    response = await axios.get(APILINK + jinmeiyo); //switch here for 2nd one if needed (joyo/jin)
   } catch (error) {
     console.log("ERROR!!");
     console.log(error);

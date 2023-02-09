@@ -5,6 +5,7 @@ export const colorPalette = {
     bgColor: '#263238',
     bgColor800: '#37474f',
     bgColor500: '#607d8b',
+    bgColor400: '#78909C',
     bgColor200: '#b0bec5',
     bgColor50: '#eceff1',
     textColor: '#ffffff',
