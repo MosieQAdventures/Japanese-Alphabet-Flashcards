@@ -21,40 +21,44 @@ export default function MainNavScreen({ navigation }) {
         <Pressable style={styles.card} onPress={hiraKataPressHandler}>
           <View style={styles.frontText}>
             <Text style={styles.setTextSub}>
-              ひらがな | カタカナ
+              ひらがな  |  カタカナ
             </Text>
-            <View style={{marginTop: 24}}>
+            
+            <View style={{marginTop: 24, marginBottom: 24}}>
               <Text style={styles.setTextSub}>
                 Hiragana | Katakana
               </Text>
-              <Text style={styles.setTextMain}>
-                Flashcards
-              </Text>
             </View>
+
+            <Text style={styles.setTextMain}>
+              Flashcards
+            </Text>
           </View>
 
           <View style={styles.idposition}>
-            <Text style={styles.setTextId}>Click  and  Learn basic symbols</Text>
+            <Text style={styles.setTextId}>Click to learn basic alphabets and symbols</Text>
           </View>
         </Pressable>
 
         <Pressable style={styles.card} onPress={kanjiPressHandler}>
           <View style={styles.frontText}>
             <Text style={styles.setTextMain}>
-              漢字 / かんじ
+              漢字  |  かんじ
             </Text>
-            <View style={{marginTop: 24}}>
+            <View style={{marginTop: 24, marginBottom: 24}}>
               <Text style={styles.setTextMain}>
                 Kanji 
               </Text>
-              <Text style={styles.setTextMain}>
-                Flashcards
-              </Text>
             </View>
+            
+            <Text style={styles.setTextMain}>
+              Flashcards
+            </Text>
+            
           </View>
 
           <View style={styles.idposition}>
-            <Text style={styles.setTextId}>Click  and  Learn up to 3000 characters</Text>
+            <Text style={styles.setTextId}>Click to learn up to 3000 different characters.</Text>
           </View>
         </Pressable>
         
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
     height: 300,
     padding: 4,
     margin: 12,
+    borderWidth: 4,
     borderRadius: 8,
     borderColor: colorPalette.whiteColor,
     backgroundColor: colorPalette.bgColor500,

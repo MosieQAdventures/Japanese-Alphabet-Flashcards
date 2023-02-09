@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Image, Pressable } from 'react-native';
-import { colorPalette } from '../Data/Colors';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Button, Pressable } from 'react-native';
 
-import { DUMMYDATA } from '../Data/DummyData';
+import { colorPalette } from '../Data/Colors';
 import FlashcardKanjiList from '../Components/FlashcardKanjiList';
+import { GetKanjiCharacters } from '../Data/ApiWrapper';
 
 export default function ApiScreen() {
 
-  const [flashcards, setFlashcards] = useState(DUMMYDATA);
   const [flashcardIndex, setFlashcardIndex] = useState(0);
   const flashcardDisplayCount = 1;
-  const flashcardsLastIndex = DUMMYDATA.length - flashcardDisplayCount;
+
+  const [apiData, setApiData] = useState([]);
 
   function nextButtonHandler() {
     let newValue = flashcardIndex + flashcardDisplayCount;
@@ -29,12 +29,28 @@ export default function ApiScreen() {
     setFlashcardIndex(newValue)
   }
 
+  useEffect(() => {
+    async function getData() {
+      const data = await GetKanjiCharacters();
+
+      //console.log("UE:");
+      //console.log(data);
+
+      setApiData(data);
+    }
+    
+    getData();
+  }, []);
+
+  const dataFromApi = apiData;
+  const flashcardsLastIndex = dataFromApi.length - flashcardDisplayCount;
+  
 
   return (
     <>
       
       <View style={styles.mainContainer}>
-        <FlashcardKanjiList flashcards = {flashcards} flashcardIndex = {flashcardIndex} flashcardCount = {flashcardDisplayCount} />
+        <FlashcardKanjiList apiData = {dataFromApi} flashcardIndex = {flashcardIndex} flashcardCount = {flashcardDisplayCount} />
       </View>
 
       <View style={styles.bottomContainer}>
@@ -49,7 +65,7 @@ export default function ApiScreen() {
             <Button title="Next ->" color={colorPalette.bgColor500} onPress={nextButtonHandler} disabled={(flashcardIndex >= flashcardsLastIndex)}/>
           </View>
           <View style={styles.skip100Button}>
-            <Button title="+100 ->>" color={colorPalette.bgColor500} onPress={skip100ButtonHandler} disabled={(flashcardIndex >= flashcardsLastIndex-101)}/>
+            <Button title="+100 ->>" color={colorPalette.bgColor500} onPress={skip100ButtonHandler} disabled={(flashcardIndex >= flashcardsLastIndex-100)}/>
           </View>
         </View>
       </View>
