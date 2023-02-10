@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Button, Image, Pressable } from 'react-native';
+
+import { FCAppContext } from '../Store/fc-app-context';
 import FlashcardList from '../Components/FlashcardList';
 import { colorPalette } from '../Data/Colors'
 import { FLASHCARDS } from '../Data/FlashcardsData'
 
 export default function HiraKataScreen() {
+  const fcAppCtx = useContext(FCAppContext)
+
   const [flashcards, setFlashcards] = useState(FLASHCARDS);
-  const [flashcardIndex, setFlashcardIndex] = useState(0);
+  const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idJoyo);
   const flashcardDisplayCount = 5;
   const flashcardsLastIndex = FLASHCARDS.length - flashcardDisplayCount;
 
 
   function nextButtonHandler() {
     let newValue = flashcardIndex + flashcardDisplayCount;
+    fcAppCtx.setIdJoyo(newValue)
     setFlashcardIndex(newValue)
   };
   function prevButtonHandler() {
     let newValue = flashcardIndex - flashcardDisplayCount;
+    fcAppCtx.setIdJoyo(newValue)
     setFlashcardIndex(newValue)
   };
   function toFirstButtonHandler() {
     let newValue = 0;
+    fcAppCtx.setIdJoyo(newValue)
     setFlashcardIndex(newValue)
   };
   function toLastButtonHandler() {
     let newValue = flashcardsLastIndex + flashcardDisplayCount - 1;
+    fcAppCtx.setIdJoyo(newValue)
     setFlashcardIndex(newValue)
   };
 

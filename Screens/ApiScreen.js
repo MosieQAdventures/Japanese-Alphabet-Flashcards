@@ -1,33 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Pressable } from 'react-native';
+import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
 
+import { FCAppContext } from '../Store/fc-app-context';
 import { colorPalette } from '../Data/Colors';
 import FlashcardKanjiList from '../Components/FlashcardKanjiList';
 import { GetKanjiCharacters } from '../Data/ApiWrapper';
+import Form from '../Components/Form';
 
-export default function ApiScreen() {
+export default function ApiScreen({ navigation }) {
+  const fcAppCtx = useContext(FCAppContext)
 
-  const [flashcardIndex, setFlashcardIndex] = useState(0);
+  const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idJinmeiyo);
   const flashcardDisplayCount = 1;
 
   const [apiData, setApiData] = useState([]);
 
+  const [isFormVisible, setIsFormVisible] = useState(false)
+
   function nextButtonHandler() {
     let newValue = flashcardIndex + flashcardDisplayCount;
+    fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   };
   function prevButtonHandler() {
     let newValue = flashcardIndex - flashcardDisplayCount;
+    fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   };
   function toFirstButtonHandler() {
     let newValue = 0;
+    fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   };
   function skip100ButtonHandler() {
     let newValue = flashcardIndex + 100;
+    fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   }
+
+  function showHideForm() {
+    setIsFormVisible(!isFormVisible)
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable onPress={showHideForm}>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <Image source={require('../assets/customIcons/hamburgerIcon.png')} resizeMode='contain' style={{maxWidth: 25, maxHeight: 25}} />
+            </View>
+          </Pressable>
+        )
+      },
+    })
+  })
 
   useEffect(() => {
     async function getData() {
@@ -44,13 +71,18 @@ export default function ApiScreen() {
 
   const dataFromApi = apiData;
   const flashcardsLastIndex = dataFromApi.length - flashcardDisplayCount;
+
   
 
   return (
     <>
-      
+
       <View style={styles.mainContainer}>
-        <FlashcardKanjiList apiData = {dataFromApi} flashcardIndex = {flashcardIndex} flashcardCount = {flashcardDisplayCount} />
+       {isFormVisible ? <Form closeForm={showHideForm} /> : null}
+
+        <View style={{flex: 2}}>
+          <FlashcardKanjiList apiData = {dataFromApi} flashcardIndex = {flashcardIndex} flashcardCount = {flashcardDisplayCount} />
+        </View>
       </View>
 
       <View style={styles.bottomContainer}>
@@ -158,4 +190,7 @@ const styles = StyleSheet.create({
 
         </Pressable>
       </View>
+
+    
+}
 */

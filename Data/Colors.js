@@ -8,8 +8,14 @@ export const colorPalette = {
     bgColor400: '#78909C',
     bgColor200: '#b0bec5',
     bgColor50: '#eceff1',
+
     textColor: '#ffffff',
     blackColor: '#000000',
     whiteColor: '#ffffff',
+
+    blue400: '#5C6BC0',
+    blue800: '#283593',
+    grey300: '#E0E0E0',
+    grey700: '#616161',
 
 };
