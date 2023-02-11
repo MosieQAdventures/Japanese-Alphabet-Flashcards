@@ -1,32 +1,50 @@
-import { React, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { React, useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, Pressable, Animated } from 'react-native';
 import { colorPalette } from '../Data/Colors';
 import { GetKanjiCharacterProperties } from '../Data/ApiWrapper';
 
 export default function FlashcardKanji({ character }) {
   const [flip, setflip] = useState(false);
 
-  const [apiCharData, setApiCharData] = useState([{"kanji":"娃","grade":9,"stroke_count":9,"meanings":["beautiful"],"kun_readings":["うつく.しい"],"on_readings":["ア","アイ","ワ"],"name_readings":["い"],"jlpt":null,"unicode":"5a03","heisig_en":"fair"}]);
+  const [apiCharData, setApiCharData] = useState([{"kanji":"?","grade":0,"stroke_count":0,"meanings":["loading"],"kun_readings":["loading"],"on_readings":["loading"],"name_readings":["?"],"jlpt":null,"unicode":"5a03","heisig_en":"loading"}]);
 
-
-  useEffect(() => {
+  
+  useEffect(() => { //load data when rendering component
     async function getData() {
       const data = await GetKanjiCharacterProperties(character.link);
-
-      //console.log("UE:");
-      //console.log(data);
 
       setApiCharData(data);
     }
     
     getData();
-  }, [flip]);
-
+  }, []);
   const dataFromApi = apiCharData[0]; 
+
+  //trying Animated
+  let rotationStartValue = 0;
+  const rotation = new Animated.Value(rotationStartValue);
+  
+  const flipAnimation = () => {
+    if (flip === true) {
+      Animated.spring(rotation, {
+        toValue: -180,
+        tension: 600,
+        friction: 30,
+        useNativeDriver: true,
+      }).start();
+    } else if (flip === false) {
+      Animated.spring(rotation, {
+        toValue: 180,
+        tension: 600,
+        friction: 30,
+        useNativeDriver: true,
+      }).start();
+    }
+  }
 
   function flipHandler() {
     setflip(!flip)
-    console.log("FC_Kanji: " + character.kanji)
+    //console.log("FC_Kanji: " + character.kanji)
     //console.log("FC: " + JSON.stringify(dataFromApi))
   }
 
@@ -87,18 +105,34 @@ export default function FlashcardKanji({ character }) {
       </View>
     </Pressable>
   );
-  let info = (
-    <View style={styles.card}>
-      <Text>Flashcard Kanji: (test it here)</Text>
-      <Text>id</Text>
-      <Text>symbolKanji</Text>
-      <Text>strokeCount</Text>
-      <Text>meanings</Text>
-      <Text>readings</Text>
-    </View>
-  );
 
-  return ( flip ? back : front )
+
+
+
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      //return on first render from this use effect
+      firstUpdate.current = false;
+      rotation.setValue(180);
+      return;
+    }
+
+    flipAnimation();
+  }, [flip]);
+
+  return ( 
+    <Animated.View style={{
+      transform: [{ rotateY: rotation.interpolate({
+        inputRange: [0, 180],
+        outputRange: ['180deg', '360deg'],
+      }) }], }
+    }>
+      { flip ? back : front }
+    </Animated.View>
+  )
+
+  //return ( flip ? back : front )
 }
 
 const styles = StyleSheet.create({
