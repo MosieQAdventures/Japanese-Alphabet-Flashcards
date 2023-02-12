@@ -1,6 +1,8 @@
 # Japanese Flashcards App
 **Japanese Flashcards with Hiragana/Katakana and Kanji characters.** 
 
+- - -
+
 Requirements needed:
 
   a.	Routing between screens                     => ✓
