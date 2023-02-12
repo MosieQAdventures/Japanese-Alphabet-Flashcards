@@ -10,6 +10,9 @@ import Form from '../Components/Form';
 export default function ApiScreen({ navigation }) {
   const fcAppCtx = useContext(FCAppContext)
 
+  let isJoyo = fcAppCtx.joyoVisible
+  let isJinmeiyo = fcAppCtx.jinmeiyoVisible
+
   const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idJinmeiyo);
   const flashcardDisplayCount = 1;
 
@@ -19,22 +22,26 @@ export default function ApiScreen({ navigation }) {
 
   function nextButtonHandler() {
     let newValue = flashcardIndex + flashcardDisplayCount;
-    fcAppCtx.setIdJinmeiyo(newValue)
+    if (isJoyo && !isJinmeiyo) fcAppCtx.setIdJoyo(newValue)
+    if (isJinmeiyo && !isJoyo) fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   };
   function prevButtonHandler() {
     let newValue = flashcardIndex - flashcardDisplayCount;
-    fcAppCtx.setIdJinmeiyo(newValue)
+    if (isJoyo && !isJinmeiyo) fcAppCtx.setIdJoyo(newValue)
+    if (isJinmeiyo && !isJoyo) fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   };
   function toFirstButtonHandler() {
     let newValue = 0;
-    fcAppCtx.setIdJinmeiyo(newValue)
+    if (isJoyo && !isJinmeiyo) fcAppCtx.setIdJoyo(newValue)
+    if (isJinmeiyo && !isJoyo) fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   };
   function skip100ButtonHandler() {
     let newValue = flashcardIndex + 100;
-    fcAppCtx.setIdJinmeiyo(newValue)
+    if (isJoyo && !isJinmeiyo) fcAppCtx.setIdJoyo(newValue)
+    if (isJinmeiyo && !isJoyo) fcAppCtx.setIdJinmeiyo(newValue)
     setFlashcardIndex(newValue)
   }
 
@@ -58,12 +65,14 @@ export default function ApiScreen({ navigation }) {
 
   useEffect(() => {
     async function getData() {
-      const data = await GetKanjiCharacters();
+      //const data = await GetKanjiCharacters(isJoyo, isJinmeiyo);
+      const dataJoyo = await GetKanjiCharacters(true, false); // load joyo on start
+      const dataJinmeiyo = await GetKanjiCharacters(false, true); // load joyo on start
 
       //console.log("UE:");
       //console.log(data);
 
-      setApiData(data);
+      setApiData(dataJoyo);
     }
     
     getData();
@@ -71,7 +80,6 @@ export default function ApiScreen({ navigation }) {
 
   const dataFromApi = apiData;
   const flashcardsLastIndex = dataFromApi.length - flashcardDisplayCount;
-
   
 
   return (

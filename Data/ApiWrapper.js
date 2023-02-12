@@ -6,15 +6,19 @@ import axios from 'axios';
 const APILINK = "https://kanjiapi.dev/v1/";
 
 // fetch all characters
-export async function GetKanjiCharacters() {
+export async function GetKanjiCharacters(isJoyo, isJinmeiyo) {
   
   const joyo     = "kanji/joyo";     // ~2136
   const jinmeiyo = "kanji/jinmeiyo"; // ~805
+  let endpoint = "";
+  if (isJoyo && !isJinmeiyo) endpoint = joyo;
+  else if (isJinmeiyo && !isJoyo) endpoint = jinmeiyo;
+  else (console.log('need only one switch active!'))
 
   let response = null;
 
   try {
-    response = await axios.get(APILINK + jinmeiyo); //switch here for 2nd one if needed (joyo/jin)
+    response = await axios.get(APILINK + endpoint); //switch here for 2nd one if needed (joyo/jin)
   } catch (error) {
     console.log("ERROR!!");
     console.log(error);

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -13,6 +13,8 @@ import FCAppContextProvider from './Store/fc-app-context';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  console.log("_ _ _")
+  console.log("App start")
 
   return (
     <>

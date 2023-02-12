@@ -10,29 +10,28 @@ export default function HiraKataScreen() {
   const fcAppCtx = useContext(FCAppContext)
 
   const [flashcards, setFlashcards] = useState(FLASHCARDS);
-  const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idJoyo);
+  const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idHiraKata);
   const flashcardDisplayCount = 5;
   const flashcardsLastIndex = FLASHCARDS.length - flashcardDisplayCount;
 
-
   function nextButtonHandler() {
     let newValue = flashcardIndex + flashcardDisplayCount;
-    fcAppCtx.setIdJoyo(newValue)
+    fcAppCtx.setIdHiraKata(newValue)
     setFlashcardIndex(newValue)
   };
   function prevButtonHandler() {
     let newValue = flashcardIndex - flashcardDisplayCount;
-    fcAppCtx.setIdJoyo(newValue)
+    fcAppCtx.setIdHiraKata(newValue)
     setFlashcardIndex(newValue)
   };
   function toFirstButtonHandler() {
     let newValue = 0;
-    fcAppCtx.setIdJoyo(newValue)
+    fcAppCtx.setIdHiraKata(newValue)
     setFlashcardIndex(newValue)
   };
   function toLastButtonHandler() {
     let newValue = flashcardsLastIndex + flashcardDisplayCount - 1;
-    fcAppCtx.setIdJoyo(newValue)
+    fcAppCtx.setIdHiraKata(newValue)
     setFlashcardIndex(newValue)
   };
 

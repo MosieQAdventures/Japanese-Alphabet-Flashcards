@@ -11,16 +11,24 @@ export default function Form({ closeForm }) {
     joyo: true, 
     jinmeiyo: false,
   });*/
-  const joyoIsEnabled = fcAppCtx.joyoVisible;
-  const jinmeiyoIsEnabled = fcAppCtx.jinmeiyoVisible;
   
   function switchPressHandler(switchIdentifier) {
     if (switchIdentifier === 'joyo') {
       fcAppCtx.setJoyoVisible();
-      fcAppCtx.setJinmeiyoVisible();
+      if (fcAppCtx.joyoVisible != fcAppCtx.jinmeiyoVisible) {
+        fcAppCtx.setJinmeiyoVisible();
+      } else {
+        //fcAppCtx.setJinmeiyoVisible();
+        //fcAppCtx.setJinmeiyoVisible();
+      }
     } else if (switchIdentifier === 'jinmeiyo') {
-      fcAppCtx.setJoyoVisible();
       fcAppCtx.setJinmeiyoVisible();
+      if (fcAppCtx.joyoVisible != fcAppCtx.jinmeiyoVisible) {
+        fcAppCtx.setJoyoVisible();
+      } else {
+        //fcAppCtx.setJoyoVisible();
+        //fcAppCtx.setJoyoVisible();
+      }
     } else {}
   }
 
@@ -37,10 +45,10 @@ export default function Form({ closeForm }) {
           <View style={styles.switch}>
             <Switch
               trackColor={{false: colorPalette.grey300, true: colorPalette.blue400}}
-              thumbColor={joyoIsEnabled ? colorPalette.blue800 : colorPalette.grey700}
+              thumbColor={fcAppCtx.joyoVisible ? colorPalette.blue800 : colorPalette.grey700}
               ios_backgroundColor={colorPalette.bgColor500}
               onValueChange={switchPressHandler.bind(this,'joyo')}
-              value={joyoIsEnabled}
+              value={fcAppCtx.joyoVisible}
             />
           </View>
         </View>
@@ -50,10 +58,10 @@ export default function Form({ closeForm }) {
           <View style={styles.switch}>
             <Switch
               trackColor={{false: colorPalette.grey300, true: colorPalette.blue400}}
-              thumbColor={jinmeiyoIsEnabled ? colorPalette.blue800 : colorPalette.grey700}
+              thumbColor={fcAppCtx.jinmeiyoVisible ? colorPalette.blue800 : colorPalette.grey700}
               ios_backgroundColor={colorPalette.bgColor500}
               onValueChange={switchPressHandler.bind(this,'jinmeiyo')}
-              value={jinmeiyoIsEnabled}
+              value={fcAppCtx.jinmeiyoVisible}
             />
           </View>
         </View>
