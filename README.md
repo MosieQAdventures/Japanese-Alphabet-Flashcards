@@ -23,13 +23,15 @@ Nice to have:
   
   i.	Authentication with FaceId/Fingerprint      => ✗
 
+- - - 
+
 ad a) App.js - Stack.Navigator
 
 ad b) async-storage.js
 
 ad c) Kanji fetched from API 
 
-- API link: https://kanjiapi.dev/
+-> API link: https://kanjiapi.dev/
       
 -> internet connection is required.
       
@@ -45,7 +47,10 @@ ad h) time's up :'(
 
 ad i) doesn't make sense here
 
+- - -
+
 App created in React Native.
 
 Hubert Mosz
+
 Capgemini
