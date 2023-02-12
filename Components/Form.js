@@ -3,14 +3,9 @@ import { Text, Switch, Button, View, StyleSheet, Pressable, Image } from 'react-
 import { colorPalette } from '../Data/Colors'
 import { FCAppContext } from '../Store/fc-app-context';
 
-export default function Form({ closeForm }) {
+export default function Form({ closeForm, updateUIData }) {
 
   const fcAppCtx = useContext(FCAppContext);
-
-  /*const [isEnabled, setIsEnabled] = useState({
-    joyo: true, 
-    jinmeiyo: false,
-  });*/
   
   function switchPressHandler(switchIdentifier) {
     if (switchIdentifier === 'joyo') {
@@ -33,6 +28,14 @@ export default function Form({ closeForm }) {
   }
 
   function formButtonPressHandler() {
+    if (fcAppCtx.joyoVisible && !fcAppCtx.jinmeiyoVisible) {
+      updateUIData(true, false);
+    } else if (fcAppCtx.jinmeiyoVisible && !fcAppCtx.joyoVisible) {
+      updateUIData(false, true);
+    } else {
+      console.log("need only one switch active - form")
+    }
+
     closeForm()
   }
 

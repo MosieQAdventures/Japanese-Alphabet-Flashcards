@@ -10,15 +10,35 @@ import Form from '../Components/Form';
 export default function ApiScreen({ navigation }) {
   const fcAppCtx = useContext(FCAppContext)
 
-  let isJoyo = fcAppCtx.joyoVisible
-  let isJinmeiyo = fcAppCtx.jinmeiyoVisible
+  const isJoyo = fcAppCtx.joyoVisible
+  const isJinmeiyo = fcAppCtx.jinmeiyoVisible
 
-  const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idJinmeiyo);
-  const flashcardDisplayCount = 1;
+  const [dataJoyo, setDataJoyo] = useState([]);
+  const [dataJinmeiyo, setDataJinmeiyo] = useState([]);
 
-  const [apiData, setApiData] = useState([]);
+  const [apiData, setApiData] = useState(dataJoyo);
 
   const [isFormVisible, setIsFormVisible] = useState(false)
+
+  const [flashcardIndex, setFlashcardIndex] = useState(fcAppCtx.idJoyo);
+  const flashcardDisplayCount = 1;
+
+  function chooseDataVisible(dataIsJoyo, dataIsJinmeiyo) {
+    if (dataIsJoyo && !dataIsJinmeiyo) {
+      setFlashcardIndex(fcAppCtx.idJoyo)
+      setApiData(dataJoyo);
+      console.log(dataJoyo[0])
+    }
+    else if (dataIsJinmeiyo && !dataIsJoyo) {
+      setFlashcardIndex(fcAppCtx.idJinmeiyo)
+      setApiData(dataJinmeiyo);
+      console.log(dataJinmeiyo[0])
+    }
+    else {
+      console.log("sth wrong is setting data in api screen")
+      setApiData(dataJoyo)
+    }
+  }
 
   function nextButtonHandler() {
     let newValue = flashcardIndex + flashcardDisplayCount;
@@ -65,17 +85,28 @@ export default function ApiScreen({ navigation }) {
 
   useEffect(() => {
     async function getData() {
-      //const data = await GetKanjiCharacters(isJoyo, isJinmeiyo);
-      const dataJoyo = await GetKanjiCharacters(true, false); // load joyo on start
-      const dataJinmeiyo = await GetKanjiCharacters(false, true); // load joyo on start
+      const dataJoyoTemp = await GetKanjiCharacters(true, false); // load joyo on start
+      const dataJinmeiyoTemp = await GetKanjiCharacters(false, true); // load jinmeiyo on start
 
       //console.log("UE:");
       //console.log(data);
+      //console.log("Loading data log...");
 
-      setApiData(dataJoyo);
+      setDataJoyo(dataJoyoTemp);
+      setDataJinmeiyo(dataJinmeiyoTemp); 
+      
+      if (fcAppCtx.joyoVisible && !fcAppCtx.jinmeiyoVisible) {
+        setFlashcardIndex(fcAppCtx.idJoyo)
+        setApiData(dataJoyoTemp);
+      }
+      else if (fcAppCtx.jinmeiyoVisible && !fcAppCtx.joyoVisible) {
+        setFlashcardIndex(fcAppCtx.idJinmeiyo)
+        setApiData(dataJinmeiyoTemp);
+      }
+      else setApiData(dataJoyoTemp);
     }
     
-    getData();
+    getData()
   }, []);
 
   const dataFromApi = apiData;
@@ -86,7 +117,7 @@ export default function ApiScreen({ navigation }) {
     <>
 
       <View style={styles.mainContainer}>
-       {isFormVisible ? <Form closeForm={showHideForm} /> : null}
+       {isFormVisible ? <Form closeForm={showHideForm} updateUIData={chooseDataVisible} /> : null}
 
         <View style={{flex: 2}}>
           <FlashcardKanjiList apiData = {dataFromApi} flashcardIndex = {flashcardIndex} flashcardCount = {flashcardDisplayCount} />

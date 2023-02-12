@@ -50,7 +50,7 @@ export function getItemFromAS(key, setFun, isInt, isBool) {
 
 export async function clearItemsFromAS() {
   try {
-    await AsyncStorage.clear();
+    //await AsyncStorage.clear(); //dont use - make it for the keys if possible
   } catch (error) {
     console.log('error! failed to remove data from asyncstorage: ')
     console.log(error)
