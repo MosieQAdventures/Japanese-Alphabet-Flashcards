@@ -1,5 +1,5 @@
 # Japanese Flashcards App
-**Japanese Flashcards with Hiragana/Katakana and Kanji characters. React Native** 
+**Japanese Flashcards with Hiragana/Katakana and Kanji characters. - React Native** 
 
 - - -
 
